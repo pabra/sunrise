@@ -92,284 +92,307 @@ export class FormulaCell<T> implements Cell<T>, Recalculable {
 
 export type UnwrapCell<T> = T extends Cell<infer U> ? U : T
 
-export function formula<
-    T1 extends Value<unknown>,
-    FN extends (val1: UnwrapCell<T1>) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(fn: FN, input1: T1): T1 extends Cell<any> ? FormulaCell<R> : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    FN extends (val1: UnwrapCell<T1>, val2: UnwrapCell<T2>) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
+// export function formula<
+//     T1 extends Value<unknown>,
+//     FN extends (val1: UnwrapCell<T1>) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(fn: FN, input1: T1): T1 extends Cell<any> ? FormulaCell<R> : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     FN extends (val1: UnwrapCell<T1>, val2: UnwrapCell<T2>) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     T5 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>,
+//         val5: UnwrapCell<T5>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4,
+//     input5: T5
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T5 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     T5 extends Value<unknown>,
+//     T6 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>,
+//         val5: UnwrapCell<T5>,
+//         val6: UnwrapCell<T6>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4,
+//     input5: T5,
+//     input6: T6
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T5 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T6 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     T5 extends Value<unknown>,
+//     T6 extends Value<unknown>,
+//     T7 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>,
+//         val5: UnwrapCell<T5>,
+//         val6: UnwrapCell<T6>,
+//         val7: UnwrapCell<T7>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4,
+//     input5: T5,
+//     input6: T6,
+//     input7: T7
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T5 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T6 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T7 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     T5 extends Value<unknown>,
+//     T6 extends Value<unknown>,
+//     T7 extends Value<unknown>,
+//     T8 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>,
+//         val5: UnwrapCell<T5>,
+//         val6: UnwrapCell<T6>,
+//         val7: UnwrapCell<T7>,
+//         val8: UnwrapCell<T8>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4,
+//     input5: T5,
+//     input6: T6,
+//     input7: T7,
+//     input8: T8
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T5 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T6 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T7 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T8 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+// export function formula<
+//     T1 extends Value<unknown>,
+//     T2 extends Value<unknown>,
+//     T3 extends Value<unknown>,
+//     T4 extends Value<unknown>,
+//     T5 extends Value<unknown>,
+//     T6 extends Value<unknown>,
+//     T7 extends Value<unknown>,
+//     T8 extends Value<unknown>,
+//     T9 extends Value<unknown>,
+//     FN extends (
+//         val1: UnwrapCell<T1>,
+//         val2: UnwrapCell<T2>,
+//         val3: UnwrapCell<T3>,
+//         val4: UnwrapCell<T4>,
+//         val5: UnwrapCell<T5>,
+//         val6: UnwrapCell<T6>,
+//         val7: UnwrapCell<T7>,
+//         val8: UnwrapCell<T8>,
+//         val9: UnwrapCell<T9>
+//     ) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(
+//     fn: FN,
+//     input1: T1,
+//     input2: T2,
+//     input3: T3,
+//     input4: T4,
+//     input5: T5,
+//     input6: T6,
+//     input7: T7,
+//     input8: T8,
+//     input9: T9
+// ): T1 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T2 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T3 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T4 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T5 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T6 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T7 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T8 extends Cell<any>
+//     ? FormulaCell<R>
+//     : T9 extends Cell<any>
+//     ? FormulaCell<R>
+//     : R
+type FormulaFn<T> = (arg: T) => unknown
+type InferReturn<T> = T extends (...args: any[]) => infer U ? U : never
+
+// export function formula<
+//     T1 extends Value<unknown>,
+//     FN extends (val1: UnwrapCell<T1>) => unknown,
+//     R = FN extends (...args: any[]) => infer T ? T : never
+// >(fn: FN, input1: T1): T1 extends Cell<any> ? FormulaCell<R> : R
+
+// R = FN extends (...args: any[]) => infer T ? T : never,
+export function formula<T1, FN extends (val1: T1) => unknown>(
     fn: FN,
-    input1: T1,
-    input2: T2
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
+    input1: Cell<T1>
+): FormulaCell<InferReturn<FN>>
+export function formula<T1, FN extends (val1: T1) => unknown>(
     fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : R
+    input1: Exclude<T1, Cell<T1>>
+): InferReturn<FN>
 export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    T5 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>,
-        val5: UnwrapCell<T5>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4,
-    input5: T5
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : T5 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    T5 extends Value<unknown>,
-    T6 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>,
-        val5: UnwrapCell<T5>,
-        val6: UnwrapCell<T6>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4,
-    input5: T5,
-    input6: T6
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : T5 extends Cell<any>
-    ? FormulaCell<R>
-    : T6 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    T5 extends Value<unknown>,
-    T6 extends Value<unknown>,
-    T7 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>,
-        val5: UnwrapCell<T5>,
-        val6: UnwrapCell<T6>,
-        val7: UnwrapCell<T7>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4,
-    input5: T5,
-    input6: T6,
-    input7: T7
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : T5 extends Cell<any>
-    ? FormulaCell<R>
-    : T6 extends Cell<any>
-    ? FormulaCell<R>
-    : T7 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    T5 extends Value<unknown>,
-    T6 extends Value<unknown>,
-    T7 extends Value<unknown>,
-    T8 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>,
-        val5: UnwrapCell<T5>,
-        val6: UnwrapCell<T6>,
-        val7: UnwrapCell<T7>,
-        val8: UnwrapCell<T8>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4,
-    input5: T5,
-    input6: T6,
-    input7: T7,
-    input8: T8
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : T5 extends Cell<any>
-    ? FormulaCell<R>
-    : T6 extends Cell<any>
-    ? FormulaCell<R>
-    : T7 extends Cell<any>
-    ? FormulaCell<R>
-    : T8 extends Cell<any>
-    ? FormulaCell<R>
-    : R
-export function formula<
-    T1 extends Value<unknown>,
-    T2 extends Value<unknown>,
-    T3 extends Value<unknown>,
-    T4 extends Value<unknown>,
-    T5 extends Value<unknown>,
-    T6 extends Value<unknown>,
-    T7 extends Value<unknown>,
-    T8 extends Value<unknown>,
-    T9 extends Value<unknown>,
-    FN extends (
-        val1: UnwrapCell<T1>,
-        val2: UnwrapCell<T2>,
-        val3: UnwrapCell<T3>,
-        val4: UnwrapCell<T4>,
-        val5: UnwrapCell<T5>,
-        val6: UnwrapCell<T6>,
-        val7: UnwrapCell<T7>,
-        val8: UnwrapCell<T8>,
-        val9: UnwrapCell<T9>
-    ) => unknown,
-    R = FN extends (...args: any[]) => infer T ? T : never
->(
-    fn: FN,
-    input1: T1,
-    input2: T2,
-    input3: T3,
-    input4: T4,
-    input5: T5,
-    input6: T6,
-    input7: T7,
-    input8: T8,
-    input9: T9
-): T1 extends Cell<any>
-    ? FormulaCell<R>
-    : T2 extends Cell<any>
-    ? FormulaCell<R>
-    : T3 extends Cell<any>
-    ? FormulaCell<R>
-    : T4 extends Cell<any>
-    ? FormulaCell<R>
-    : T5 extends Cell<any>
-    ? FormulaCell<R>
-    : T6 extends Cell<any>
-    ? FormulaCell<R>
-    : T7 extends Cell<any>
-    ? FormulaCell<R>
-    : T8 extends Cell<any>
-    ? FormulaCell<R>
-    : T9 extends Cell<any>
-    ? FormulaCell<R>
-    : R
+    T1,
+    U1 extends Exclude<T1, Cell<T1>> | Cell<T1>,
+    FN extends (val1: T1) => unknown
+>(fn: FN, input1: U1): FormulaCell<InferReturn<FN>>
 export function formula<T>(
     fn: Function,
     ...sources: Value<unknown>[]

@@ -1,3 +1,4 @@
+import { Value } from 'interfaces/Cell'
 import { expectError, expectNotType, expectType, expectAssignable } from 'tsd'
 import { FormulaCell, Cell, SourceCell, cell, map } from '../index'
 
@@ -17,4 +18,20 @@ import { FormulaCell, Cell, SourceCell, cell, map } from '../index'
 
     expectError(map((x: string) => x.toUpperCase(), numberCell))
     expectError(map((x) => x.toUpperCase(), numberCell))
+}
+
+{
+    function callIf<T, U>(
+        cellOrValue: Cell<T> | T,
+        cb: (arg: T) => U
+    ): U | null {
+        const res = map((value) => {
+            if (value) {
+                return cb(value)
+            }
+            return null
+        }, cellOrValue)
+
+        return res
+    }
 }
